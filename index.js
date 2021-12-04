@@ -1,6 +1,11 @@
 const express = require('express')
+const path = require('path')
 
 const app = express()
+
+// Handlebars setup
+app.set('view engine', 'hbs')
+
 
 // routes handlers
 app.use('/', require('./routes/index'))

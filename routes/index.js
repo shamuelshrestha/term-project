@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 router.route('/').get((req, res) => {
-    res.send('Hello World, I am Shamuel Shrestha.')
+    res.render('test.hbs', {message: 'Hello world, this is shamuel shrestha.'})
 })
 
 module.exports = router
