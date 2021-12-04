@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
+const {db} = require('./connection')
 
 const app = express()
 
