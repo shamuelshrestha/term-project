@@ -5,6 +5,7 @@ const {db} = require('./connection')
 var session = require('express-session')
 var MySQLStore = require('express-mysql-session')(session)
 const passport = require('passport')
+require('./config/passport')(passport)
 
 
 const app = express()
@@ -28,15 +29,15 @@ app.use(session({
     cookie: {maxAge: 24 * 24 * 60000}
 }))
 
+// Passport setup
+app.use(passport.initialize())
+app.use(passport.session())
+
 // Express body parser
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
-
-// Passport setup
-app.use(passport.initialize())
-app.use(passport.session())
 
 // Handlebars setup
 app.set('view engine', 'hbs')

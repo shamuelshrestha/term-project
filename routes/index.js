@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
+
 const {User, Post} = require('../models/Models') 
 const {Op} = require('sequelize')
 
@@ -12,6 +14,37 @@ router.route('/').get((req, res) => {
 router.route('/login').get((req, res) => {
     res.render('login.hbs', {title: 'Login', })
 })
+
+// Login post
+router.route('/login').post((req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if(!user){
+            var data = {
+                title: 'failure'
+            }
+            res.send(data)
+        }else{
+            bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+                if(err) console.log(err)
+                if(isMatch) {
+                    req.logIn(user, (err) => {
+                        var data = {
+                            title: 'success',
+                        }
+                        res.json(data)
+                    })
+                }else {
+                    var data = {
+                        title: 'password',
+                    }
+                    res.json(data)
+                }
+            })
+        }
+    })(req, res, next)
+})
+
+
 
 // registration routes
 router.route('/register').get((req, res) => {

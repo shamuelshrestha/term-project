@@ -10,12 +10,12 @@ function firetoast(msg){
           toast.addEventListener('mouseenter', Swal.stopTimer)
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      })
+    })
       
-      return Toast.fire({
-        icon: 'error',
-        title: `${msg}`
-      })
+    return Toast.fire({
+    icon: 'error',
+    title: `${msg}`
+    })
 }
 
 // Login 
@@ -31,6 +31,49 @@ $("#loginBtn").on('click', (e) => {
     if(password === ''){
         return firetoast('Password field cannot be empty.')
     }
+
+    return fetch('/login', {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({username, password})
+    }).then(res => res.json())
+    .then(data => {
+        console.log(data)
+        if(data.title === 'error'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again!'
+            }).then(value => {
+                document.getElementById('loginBtn').disabled = false
+            })
+        }
+
+        if(data.title === 'failure'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Not Found',
+                text: 'Incorrect Username. Please check again!'
+            }).then(value => {
+                document.getElementById('loginBtn').disabled = false
+            })
+        }
+
+        if(data.title === 'password'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Wrong Password',
+                text: 'Incorrect Password. Please check again!'
+            }).then(value => {
+                document.getElementById('loginBtn').disabled = false
+            })
+        }
+
+        if(data.title === 'success'){
+            // console.log('i am here success wala title')
+            return window.location.href = '/'
+        }
+    })
 })
 
 // Register

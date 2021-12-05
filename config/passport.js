@@ -15,7 +15,7 @@ module.exports = function(passport){
                     bcrypt.compare(password, user[0].dataValues.password, (err, isMatch) => {
                         if(err) console.log(err)
                         if(isMatch) {
-                            return done(null, user[0].dataValues.id)
+                            return done(null, user[0].dataValues)
                         }else {
                             var err = 'password'
                             done(err)
@@ -28,13 +28,13 @@ module.exports = function(passport){
         })
     )
 
-    passport.serializeUser(function(id, done){
-        done(null, id)
+    passport.serializeUser(function(user, done){
+        done(null, user)
     })
-    passport.deserializeUser(function(id, done){
-        User.findOne({where: {id: id}}).then(user => {
-                console.log("user desearalize")
-                done(null, user)
+    passport.deserializeUser(function(user, done){
+        User.findOne({where: {id: user.id}}).then(user => {
+            console.log("user desearalize")
+            done(null, user)
         } ).catch(err => {done(err)})
     })
 }
