@@ -21,16 +21,59 @@ button {
 	font-weight: 400;
 	font-size: 16px;
 	color: #000 !important;
-	text-decoration: none;
+	text-decoration: none !important;
 }
 nav {
 	display: flex;
 	align-items: center;
-	height: 48px;
+	height: 80px;
 	justify-content: space-between;
 	margin: 0 10%;
 }
+.navbar form{
+    margin: auto 0;
+}
 
+.navbar .form-control{
+    margin: 0;
+    width: 400px;
+}
+.navbar form{
+    position: relative;
+}
+.navbar form .search-box{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 400px;
+    height: 200px;
+    background: #fff;
+    color: rgb(14, 13, 13);
+    z-index: 2;
+    padding: 15px 20px;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    box-shadow: 0 0 10px #ccc;
+}
+.navbar form .search-box .search-item{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+.navbar form .search-box img{
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+}
+.navbar .btn{
+    margin: 0 20px 0 0;
+    height: 38px;
+    width: inherit;
+}
+.navbar .btn:hover{
+    color: #fff !important;
+}
 button {
 	padding: 9px 25px;
 	background-color: rgba(0, 136, 169, 1);
@@ -132,11 +175,7 @@ img {
 	width: 80vw;
 	margin: 60px auto;
 }
-.cards {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 40px;
-}
+
 .cards .card {
 	width: 100% !important;
 }
@@ -146,10 +185,11 @@ img {
 /* inner blog */
 .blog-post {
 	width: 500px;
-	margin: 90px auto 0;
+	margin: 0 auto;
 }
 .blog-post img {
 	width: 100%;
+    margin-bottom: 20px;
 }
 .blog-post input {
 	padding: 10px 15px;
@@ -196,25 +236,3 @@ footer li {
 }
 
 /* media query */
-@media only screen and (max-width: 768px) {
-	.blog-post {
-		width: 700px;
-		margin: 30px auto 0;
-	}
-	.cards {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 40px;
-	}
-}
-@media only screen and (max-width: 500px) {
-	.blog-post {
-		width: 400px;
-		margin: 30px auto 0;
-	}
-	.cards {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 30px;
-	}
-}

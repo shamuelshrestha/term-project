@@ -37,11 +37,12 @@ const upload = multer({
 
 // Homepage route
 router.route('/').get((req, res) => {
-    if(req.isAuthenticated()){
-        console.log(req.user)
-        return res.render('index.hbs', {title: 'Home', auth: true, authuser: req.user})
-    }
-    res.render('index.hbs', {title: 'Home', auth: false})
+    Post.findAll().then(posts => {
+        if(req.isAuthenticated()){
+            return res.render('index.hbs', {title: 'Home', auth: true, authuser: req.user, posts})
+        }
+        res.render('index.hbs', {title: 'Home', auth: false, posts})
+    }).catch(err => {console.error(err)})
 })
 
 // Login routes

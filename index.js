@@ -43,7 +43,8 @@ app.use(express.urlencoded({
 app.set('view engine', 'hbs')
 
 // Public/static directory setup
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
+app.use('/uploads', express.static('uploads'))
 
 // setting partials 
 hbs.registerPartials(__dirname + '/views/partials')
