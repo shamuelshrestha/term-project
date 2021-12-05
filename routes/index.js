@@ -10,10 +10,10 @@ const{ensureAuthenticated, forwardAuthenticated} = require("../config/auth")
 
 // Multer Congig
 const storage = multer.diskStorage({
-    destination: (req, file, cb) =>{
+    destination: (req, file, cb) => {
         cb(null, './uploads')
     },
-    filename: (req, file, cb) =>{
+    filename: (req, file, cb) => {
         cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
     }
 })
@@ -229,6 +229,19 @@ router.route('/:id/comment').post(ensureAuthenticated, (req, res) => {
             title: 'error'
         }
         return res.status(200).send(data)
+    })
+})
+
+
+// Search 
+router.get('/search', (req, res, next) => {
+    Post.findAll({where: {title: {[Op.like]: `%${req.query.s}%`}}, raw: true}).then(datas => {
+        console.log(datas)
+        var data = datas
+        res.json(data)
+        next()
+    }).catch(err => {
+        console.log(err)
     })
 })
 

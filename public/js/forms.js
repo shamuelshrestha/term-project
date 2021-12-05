@@ -1,3 +1,8 @@
+$('body').on("click", function () {
+    $(".list-group-item").hide();
+});
+
+
 // Toast
 function firetoast(msg){
     const Toast = Swal.mixin({
@@ -230,7 +235,7 @@ $('#postForm').on('submit', (e) => {
     })
 })
 
-
+// Commenting on post
 $("#commentBtn").on('click', (e) => {
     e.preventDefault()
     
@@ -264,4 +269,33 @@ $("#commentBtn").on('click', (e) => {
         }
 
     })
+})
+
+// Searching posts...
+$("#search").keyup((e) => {
+    e.preventDefault()
+    // alert('ddd')
+
+    var search = $('#search').val()
+    // console.log(search)
+    if(search != ''){
+        return fetch(`/search?s=${search}`, {
+            method: 'get',
+
+        }).then(res => res.json(res))
+        .then(data => {
+            // console.log(data)
+            $("#searchResult").empty()
+
+            for( var i = 0; i < data.length; i++){
+                console.log(i)
+                var id = data[i].id
+                var title = data[i].title
+                // var image = data[i].image  
+                $("#searchResult").append("<li class='list-group-item' value='"+id+"'><a href='/"+id+"/view'><img src='"+data[i].image+"'><span>"+title+"</span></a></li>")
+            }
+        })
+    }else{
+        $("#searchResult").append("")
+    }  
 })
