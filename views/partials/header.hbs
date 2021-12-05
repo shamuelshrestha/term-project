@@ -9,8 +9,13 @@
     <nav>
         <ul class="nav_links">
             <li><a href="/"><h3>Term-Project</h3></a></li>
-            {{!-- <li><a href="/">Home </a></li> --}}
+            {{#if auth}}
+            <li><a href="/post"><h3>Create Post</h3></a></li>
+            {{/if}}
         </ul>
-        <a class="cta"> <button onclick="location.href = '/register'">Register</button> <button onclick="location.href = '/login'">Login</button> </a>
-
+        {{#if auth}}
+            <a class="cta"> <button onclick="location.href = '/logout'">Logout</button> </a>
+        {{else}}
+            <a class="cta"> <button onclick="location.href = '/register'">Register</button> <button onclick="location.href = '/login'">Login</button> </a>
+        {{/if}}
     </nav>

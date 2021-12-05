@@ -4,15 +4,20 @@ const passport = require('passport')
 
 const {User, Post} = require('../models/Models') 
 const {Op} = require('sequelize')
+const{ensureAuthenticated, forwardAuthenticated} = require("../config/auth")
 
 // Homepage route
 router.route('/').get((req, res) => {
-    res.render('login.hbs', {title: 'Home', })
+    if(req.isAuthenticated()){
+        console.log(req.user)
+        return res.render('index.hbs', {title: 'Home', auth: true, authuser: req.user})
+    }
+    res.render('index.hbs', {title: 'Home', auth: false})
 })
 
 // Login routes
-router.route('/login').get((req, res) => {
-    res.render('login.hbs', {title: 'Login', })
+router.route('/login').get(forwardAuthenticated, (req, res) => {
+    res.render('login.hbs', {title: 'Login', auth:false })
 })
 
 // Login post
@@ -44,11 +49,19 @@ router.route('/login').post((req, res, next) => {
     })(req, res, next)
 })
 
+// Logout
+router.route('/logout').get((req, res) => {
+    req.logout()
+    req.session.destroy(function(err) {
+        if(err) {console.log(err)}
+        res.redirect('/login')
+    })
+})
 
 
 // registration routes
-router.route('/register').get((req, res) => {
-    res.render('register.hbs', {title: 'Registration', })
+router.route('/register').get(forwardAuthenticated, (req, res) => {
+    res.render('register.hbs', {title: 'Registration', auth: false })
 })
 
 router.route('/register').post((req, res) => {
@@ -98,7 +111,7 @@ router.route('/register').post((req, res) => {
 
 // Post routes
 router.route('/post').get((req, res) => {
-    res.render('post.hbs', {title: 'Post', })
+    res.render('post.hbs', {title: 'Post', auth: true, authuser: req.user })
 })
 
 module.exports = router
