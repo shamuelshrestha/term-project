@@ -1,15 +1,15 @@
 {{> header}}
 <div class="body">
     <h1>Post Image</h1>
-    <form class="">
+    <form class="" id="postForm">
         <label for="">Post Title : </label>
-        <input type="text" name="" id="title" placeholder="Post Title"><br>
+        <input type="text" name="title" id="title" placeholder="Post Title"><br>
         <label for="">Post Description : </label>
-        <input type="text" name="" id="description" placeholder="Post Description"><br>
+        <input type="text" name="description" id="description" placeholder="Post Description"><br>
         <label for="">Input image : </label>
-        <input type="file" name="" accept="image/*"><br>
+        <input type="file" name="postImage" id="postImage" accept="image/*" single >
 
-        <button type="button" name="button" id="postBtn">Post</button>
+        <button type="submit" name="button" id="postBtn">Post</button>
     </form>
 </div>
 {{> footer}}

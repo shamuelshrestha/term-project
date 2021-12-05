@@ -158,3 +158,74 @@ $("#registerBtn").on('click', (e) => {
 
     })
 })
+
+// posting a new image post
+$('#postForm').on('submit', (e) => {
+    e.preventDefault()
+    // alert('form')
+    document.getElementById('postBtn').disabled = true
+
+    var form = document.getElementById("postForm")
+    var formData = new FormData(form)
+    console.log(formData)
+
+    return fetch('/post', {
+        method: 'POST',
+        // headers: {'Content-type': 'application/json'},
+        body: formData
+    }).then(res => res.json(res))
+    .then(data => {
+        if(data.title === 'error'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again!'
+            }).then(value => {
+                document.getElementById('postBtn').disabled = false
+            })
+        }
+
+        if(data.title === 'success'){
+            return  Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Post creatd successfully!'
+            }).then(value => {
+                window.location.href = `/`
+            })
+        }
+
+        // nofile
+        if(data.title === 'no image'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'No File',
+                text: 'No File Uploaded!'
+            }).then(value => {
+                document.getElementById('postBtn').disabled = false
+            })
+        }
+
+        // no title
+        if(data.title === 'no title'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Empty title',
+                text: 'Title field cannot be empty!'
+            }).then(value => {
+                document.getElementById('postBtn').disabled = false
+            })
+        }
+
+        // Post already exists
+        if(data.title === 'exists'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Exists',
+                text: 'This post already exists!'
+            }).then(value => {
+                document.getElementById('postBtn').disabled = false
+            })
+        }
+    })
+})

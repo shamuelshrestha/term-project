@@ -38,9 +38,17 @@ const Post = db.define('post', {
         type: DataTypes.STRING(100),
         allowNull: false
     },
+    image: {
+        type: DataTypes.STRING(200),
+        allowNull: false
+    },
     user: {
         type: Sequelize.UUID,
         allowNull: false
+    },
+    comments: {
+        type: DataTypes.JSON,
+        defaultValue: ['start']
     }
 })
 
