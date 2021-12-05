@@ -206,9 +206,9 @@ router.route('/:id/comment').post(ensureAuthenticated, (req, res) => {
     const {comment} = req.body
     Post.findOne({where: {id: req.params.id}}).then(post => {
         console.log(post)
-        User.findOne({where: {id: post.user}}).then(user => {
+        // User.findOne({where: {id: post.user}}).then(user => {
             var obj = {
-                username: user.username,
+                username: req.user.username,
                 comment
             }
             var arr = [obj].concat(post.comments)
@@ -221,7 +221,7 @@ router.route('/:id/comment').post(ensureAuthenticated, (req, res) => {
                 }
                 return res.status(200).send(data)
             })
-        })
+        // })
         
     }).catch(err =>{
         console.log(err)

@@ -2,7 +2,9 @@
     <div class="home">
         <div class="cards row row-cols-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
             {{#each posts}}
-            {{#if posts}}
+            {{#ifEquals posts.length 0}}
+                <h2>No data to show. Post some images please</h2>
+            {{else}}
                 <div class="col">
                     <div class="card" style="width: 18rem;">
                         <img src="{{ this.image }}" class="card-img-top" alt="...">
@@ -13,9 +15,7 @@
                         </div>
                     </div>
                 </div>
-            {{else}}
-                <h2>No data to show. Post some images please</h2>
-            {{/if}}
+            {{/ifEquals}}
             {{/each}}
         </div>
         

@@ -242,7 +242,7 @@ $("#commentBtn").on('click', (e) => {
     document.getElementById('commentBtn').disabled = true
     const id = document.getElementById('postId').dataset.id
     var comment = $("#comment").val()
-    alert(id)
+    // alert(id)
     if(comment.length < 3){
         // alert('invalid cmnt')
         return firetoast('Invalid comment')

@@ -48,6 +48,9 @@ app.use('/uploads', express.static('uploads'))
 
 // setting partials 
 hbs.registerPartials(__dirname + '/views/partials')
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+})
 
 // routes handlers
 app.use('/', require('./routes/index'))
