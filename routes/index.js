@@ -191,11 +191,9 @@ router.route('/:id/view').get( (req, res) => {
         User.findOne({where: {id: post.user}}).then(user => {
             console.log(user)
             if(req.isAuthenticated()){
-                return res.status(200).send('User: '+user.username)
-                // return res.render('post.hbs', {title: 'Single Post', auth: true, authuser: req.user, user, post })
+                return res.render('postInner.hbs', {title: 'Single Post', auth: true, authuser: req.user, user, post })
             }
-            // return res.render('post.hbs', {title: 'Single Post', auth: false, user, post })
-            return res.status(200).send('User: '+user.username)
+            return res.render('postInner.hbs', {title: 'Single Post', auth: false, user, post })
         })
     }).catch(err => {console.error(err)})
     // res.render('post.hbs', {title: 'Post', auth: true, authuser: req.user })
@@ -212,9 +210,9 @@ router.route('/:id/comment').post(ensureAuthenticated, (req, res) => {
                 username: user.username,
                 comment
             }
-            var arr = post.comments
-            arr.push(obj)
-            console.log(arr)
+            var arr = [obj].concat(post.comments)
+            // arr.push(obj)
+            // console.log(arr)
             Post.update({comments: arr}, {where: {id: req.params.id}}).then(update => {
                 console.log(update)
                 var data = {

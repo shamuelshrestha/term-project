@@ -48,7 +48,7 @@ const Post = db.define('post', {
     },
     comments: {
         type: DataTypes.JSON,
-        defaultValue: ['start']
+        defaultValue: []
     }
 })
 

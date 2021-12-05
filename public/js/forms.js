@@ -229,3 +229,39 @@ $('#postForm').on('submit', (e) => {
         }
     })
 })
+
+
+$("#commentBtn").on('click', (e) => {
+    e.preventDefault()
+    
+    document.getElementById('commentBtn').disabled = true
+    const id = document.getElementById('postId').dataset.id
+    var comment = $("#comment").val()
+    alert(id)
+    if(comment.length < 3){
+        // alert('invalid cmnt')
+        return firetoast('Invalid comment')
+    }
+    // alert(comment)
+    return fetch(`/${id}/comment`, {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({comment})
+    }).then(res => res.json())
+    .then(data => {
+        if(data.title === 'error'){
+            return  Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again!'
+            }).then(value => {
+                document.getElementById('commentBtn').disabled = false
+            })
+        }
+
+        if(data.title === 'success'){
+            location.reload()
+        }
+
+    })
+})

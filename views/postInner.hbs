@@ -1,0 +1,29 @@
+{{> header}}
+<div class="home">
+        <div class="blog-post" id="postId" data-id="{{ post.id }}">
+            <img src="{{ post.image }}" alt="">
+            <div class="title">
+                <h2>{{ post.title }}</h2>
+                <p>
+                    {{ post.description }}
+                </p>
+            </div>
+            <input type="text" name="comment" id="comment" placeholder="Write a comment as {{ authuser.username }}">
+            <button type="submit" id="commentBtn">Comment</button>
+        </div>
+        <!-- cmnt -->
+        {{#each post.comments}}
+            <div class="comment-section">
+                <div class="cmnt-img">
+                    <img src="https://media.istockphoto.com/photos/portrait-of-a-boy-at-school-picture-id1306495344?b=1&k=20&m=1306495344&s=170667a&w=0&h=7_Uy4nBEcsXmiYyIcoabTx3CABvOmPpoQvP0JNa85iw=" alt="">
+                </div>
+                <div class="cmnt">
+                    <a href="#">{{ this.username }}</a>
+                    <span>
+                        {{ this.comment }}
+                    </span>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    {{> footer}}
