@@ -2,8 +2,41 @@ const express = require('express')
 const path = require('path')
 const hbs = require('hbs')
 const {db} = require('./connection')
+var session = require('express-session')
+var MySQLStore = require('express-mysql-session')(session)
+const passport = require('passport')
+
 
 const app = express()
+
+var options = {
+	host: process.env.HOST,
+	port: 3306,
+	user: process.env.USER,
+	password: process.env.PASS,
+	database: process.env.DATABASE
+}
+
+var sessionStore = new MySQLStore(options)
+
+// express session
+app.use(session({
+    secret: 'my-term-project',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {maxAge: 24 * 24 * 60000}
+}))
+
+// Express body parser
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
+// Passport setup
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Handlebars setup
 app.set('view engine', 'hbs')
