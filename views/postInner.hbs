@@ -1,7 +1,12 @@
 {{> header}}
+<div class="home-bg">
+    <img src="/images/postinner.jpg" alt="">
+    <div class="home-text">
+        <h1>{{ post.title }}</h1>
+    </div>
+</div>
 <div class="home">
         <div class="blog-post" id="postId" data-id="{{ post.id }}">
-            <h2>{{ post.title }}</h2>
             <img src="{{ post.image }}" alt="">
             <div class="title">
                 <p>
